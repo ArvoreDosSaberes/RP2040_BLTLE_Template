@@ -1,4 +1,4 @@
-# Pico W – Reader (Atuador PWM BLE)
+# Pico W – Client (Atuador PWM BLE)
 
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=ArvoreDosSaberes.RP2040_BLTLE_Template)
 [![Issues](https://img.shields.io/github/issues/ArvoreDosSaberes/RP2040_BLTLE_Template)](https://github.com/ArvoreDosSaberes/RP2040_BLTLE_Template/issues)
@@ -39,11 +39,11 @@ Isso irá gerar o binário/UF2 do `reader` (por exemplo, `reader.uf2`).
 ## Como gravar no Pico W
 
 1. Coloque o segundo Pico W em modo **BOOTSEL**:
+
    - Segure o botão **BOOTSEL**.
    - Conecte o cabo USB ao computador.
    - Solte o botão.
    - O Pico aparecerá como um drive USB (ex.: `RPI-RP2`).
-
 2. Copie o arquivo `reader.uf2` (da pasta `build-reader/`) para o drive `RPI-RP2`.
 3. O Pico irá reiniciar automaticamente com o firmware `reader`.
 
