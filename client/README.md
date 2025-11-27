@@ -71,3 +71,12 @@ Este subprojeto segue a mesma licença do repositório principal: **Creative Com
 Para mais detalhes, consulte o README na raiz do repositório ou acesse:
 
 - https://creativecommons.org/licenses/by/4.0/
+
+---
+
+## Autor
+
+- **Nome:** Carlos Delfino
+- **GitHub:** https://github.com/carlosdelfino
+- **Site:** https://carlosdelfino.eti.br
+- **E-mail:** consultoria@carlosdelfino.eti.br

@@ -169,3 +169,12 @@ Um arquivo separado de licença também é fornecido neste repositório.
 - Baseado em exemplo do **Raspberry Pi Pico SDK**.
 - Adaptações e organização do template por **Carlos Delfino**.
 - Código original do demo Bluetooth (`writer`/`reader`) por **Travis Llado**.
+
+---
+
+## Autor
+
+- **Nome:** Carlos Delfino
+- **GitHub:** https://github.com/carlosdelfino
+- **Site:** https://carlosdelfino.eti.br
+- **E-mail:** consultoria@carlosdelfino.eti.br

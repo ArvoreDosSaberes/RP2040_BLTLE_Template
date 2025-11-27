@@ -163,3 +163,10 @@ Basta garantir que o executável do exemplo esteja linkado com `log_vt100` e inc
 ## Licença
 
 Consulte `LICENSE` no repositório para detalhes de uso e redistribuição.
+
+## Autor
+
+- **Nome:** Carlos Delfino
+- **GitHub:** https://github.com/carlosdelfino
+- **Site:** https://carlosdelfino.eti.br
+- **E-mail:** consultoria@carlosdelfino.eti.br
