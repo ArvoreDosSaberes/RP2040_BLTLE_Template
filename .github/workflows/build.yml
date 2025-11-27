@@ -1,0 +1,44 @@
+name: Build RP2040 Projects
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      PICO_SDK_PATH: ${{ github.workspace }}/pico-sdk
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Install Toolchain & Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential cmake python3
+
+    - name: Checkout Pico SDK
+      uses: actions/checkout@v4
+      with:
+        repository: raspberrypi/pico-sdk
+        path: pico-sdk
+        submodules: true
+
+    - name: Build Client
+      run: |
+        mkdir -p client/build
+        cd client/build
+        cmake .. -DPICO_BOARD=pico_w
+        make -j$(nproc)
+
+    - name: Build Server
+      run: |
+        mkdir -p server/build
+        cd server/build
+        cmake .. -DPICO_BOARD=pico_w
+        make -j$(nproc)
