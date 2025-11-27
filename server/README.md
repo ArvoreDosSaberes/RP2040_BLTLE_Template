@@ -1,6 +1,7 @@
 # Pico W – Server (Sensor BLE)
 
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=ArvoreDosSaberes.RP2040_BLTLE_Template)
+[![Build](https://img.shields.io/github/actions/workflow/status/ArvoreDosSaberes/RP2040_BLTLE_Template/ci.yml?branch=main)](https://github.com/ArvoreDosSaberes/RP2040_BLTLE_Template/actions)
 [![Issues](https://img.shields.io/github/issues/ArvoreDosSaberes/RP2040_BLTLE_Template)](https://github.com/ArvoreDosSaberes/RP2040_BLTLE_Template/issues)
 [![Stars](https://img.shields.io/github/stars/ArvoreDosSaberes/RP2040_BLTLE_Template)](https://github.com/ArvoreDosSaberes/RP2040_BLTLE_Template/stargazers)
 [![Forks](https://img.shields.io/github/forks/ArvoreDosSaberes/RP2040_BLTLE_Template)](https://github.com/ArvoreDosSaberes/RP2040_BLTLE_Template/network/members)

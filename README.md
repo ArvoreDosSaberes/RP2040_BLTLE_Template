@@ -10,8 +10,8 @@
 
 Projeto simples, copiado do Pico SDK e modificado para demonstrar funcionalidades de **Bluetooth Low Energy (BLE)** usando duas placas **Raspberry Pi Pico W**:
 
-- **writer**: lê uma entrada analógica (tensão) no GPIO 26 / canal ADC 0 e transmite o valor via BLE.
-- **reader**: recebe o valor via BLE e gera um **PWM** proporcional no GPIO 21.
+- **Server**: lê uma entrada analógica (tensão) no GPIO 26 / canal ADC 0 e transmite o valor via BLE.
+- **Client**: recebe o valor via BLE e gera um **PWM** proporcional no GPIO 21.
 
 É possível verificar o funcionamento tanto pela saída serial USB de cada placa quanto ligando dispositivos analógicos:
 
@@ -26,15 +26,16 @@ Assim, você pode controlar um dispositivo conectado ao `reader` girando o poten
 
 Dentro do diretório `RP2040_BLTLE_Template/` você encontrará:
 
-- `writer/`
-  - `writer.cpp`: código principal que lê o ADC no GPIO 26 e envia o valor via BLE.
-  - `bt_setup.cpp` / `bt_setup.h`: configuração de Bluetooth e callbacks.
+- `client/`
+
+  - `client.cpp`: código principal que lê o ADC no GPIO 26 e envia o valor via BLE.
+  - `bt_client_setup.cpp` / `bt_setup.h`: configuração de Bluetooth e callbacks.
   - `temp_sensor.gatt`: definição do serviço/característica BLE usada para enviar os dados.
   - `CMakeLists.txt`: configuração de build para o executável `writer`.
+- `server/`
 
-- `reader/`
-  - `reader.cpp`: código principal que recebe o valor via BLE e ajusta o PWM no GPIO 21.
-  - `bt_setup.cpp` / `bt_setup.h`: configuração de Bluetooth e callbacks.
+  - `server.cpp`: código principal que recebe o valor via BLE e ajusta o PWM no GPIO 21.
+  - `bt_server_setup.cpp` / `bt_setup.h`: configuração de Bluetooth e callbacks.
   - `CMakeLists.txt`: configuração de build para o executável `reader`.
 
 ---
@@ -57,14 +58,13 @@ Dentro do diretório `RP2040_BLTLE_Template/` você encontrará:
 2. No diretório raiz do template (`RP2040_BLTLE_Template/`), crie um diretório de build para cada projeto ou um build compartilhado:
 
    ```bash
-   mkdir -p build-writer
-   cd build-writer
-   cmake ../writer
+   mkdir -p build-server
+   cd build-server
+   cmake ../server
    make
    ```
 
    Isso irá gerar o binário/UF2 do `writer` (por exemplo, `writer.uf2`).
-
 3. Para o `reader`:
 
    ```bash
@@ -81,16 +81,17 @@ Dentro do diretório `RP2040_BLTLE_Template/` você encontrará:
 ## Como gravar o firmware em cada Pico W
 
 1. **Coloque o Pico W em modo BOOTSEL**:
+
    - Segure o botão **BOOTSEL** na placa.
    - Conecte o cabo USB ao computador.
    - Solte o botão.
    - O Pico aparecerá como um drive USB (ex.: `RPI-RP2`).
-
 2. **Gravar o `writer`**:
+
    - Copie o arquivo `writer.uf2` (gerado em `build-writer/`) para o drive `RPI-RP2`.
    - O Pico irá reiniciar automaticamente com o firmware do `writer`.
-
 3. **Gravar o `reader`**:
+
    - Repita o processo usando a segunda placa Pico W.
    - Copie o arquivo `reader.uf2` (gerado em `build-reader/`) para o `RPI-RP2` da segunda placa.
 
@@ -101,12 +102,13 @@ Dentro do diretório `RP2040_BLTLE_Template/` você encontrará:
 ### 1. Conexões de hardware
 
 - **Placa `writer`**:
+
   - Conecte um **potenciômetro** ao **GPIO 26** (canal ADC 0).
     - Pino 1 do potenciômetro → 3V3.
     - Pino 2 (cursor) → GPIO 26.
     - Pino 3 → GND.
-
 - **Placa `reader`**:
+
   - Conecte sua carga ao **GPIO 21** (saída PWM):
     - Por exemplo, um **driver de motor** ou um **LED + resistor**.
     - Verifique sempre as correntes máximas permitidas pelo Pico W. Use estágios de potência/driver quando necessário.
