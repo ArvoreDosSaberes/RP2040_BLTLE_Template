@@ -15,10 +15,10 @@ Projeto simples, copiado do Pico SDK e modificado para demonstrar funcionalidade
 
 É possível verificar o funcionamento tanto pela saída serial USB de cada placa quanto ligando dispositivos analógicos:
 
-- **Entrada analógica** (ex.: potenciômetro) conectada ao `writer`.
-- **Saída analógica/atuador** (ex.: driver de motor, LED de alta potência, etc.) conectada ao `reader`.
+- **Entrada analógica** (ex.: potenciômetro) conectada ao `server`.
+- **Saída analógica/atuador** (ex.: driver de motor, LED de alta potência, etc.) conectada ao `client`.
 
-Assim, você pode controlar um dispositivo conectado ao `reader` girando o potenciômetro ligado ao `writer`.
+Assim, você pode controlar um dispositivo conectado ao `client` girando o potenciômetro ligado ao `server`.
 
 ---
 
@@ -31,12 +31,12 @@ Dentro do diretório `RP2040_BLTLE_Template/` você encontrará:
   - `client.cpp`: código principal que lê o ADC no GPIO 26 e envia o valor via BLE.
   - `bt_client_setup.cpp` / `bt_setup.h`: configuração de Bluetooth e callbacks.
   - `temp_sensor.gatt`: definição do serviço/característica BLE usada para enviar os dados.
-  - `CMakeLists.txt`: configuração de build para o executável `writer`.
+  - `CMakeLists.txt`: configuração de build para o executável `client`.
 - `server/`
 
   - `server.cpp`: código principal que recebe o valor via BLE e ajusta o PWM no GPIO 21.
   - `bt_server_setup.cpp` / `bt_setup.h`: configuração de Bluetooth e callbacks.
-  - `CMakeLists.txt`: configuração de build para o executável `reader`.
+  - `CMakeLists.txt`: configuração de build para o executável `server`.
 
 ---
 
@@ -64,17 +64,17 @@ Dentro do diretório `RP2040_BLTLE_Template/` você encontrará:
    make
    ```
 
-   Isso irá gerar o binário/UF2 do `writer` (por exemplo, `writer.uf2`).
-3. Para o `reader`:
+   Isso irá gerar o binário/UF2 do `server` (por exemplo, `server.uf2`).
+3. Para o `client`:
 
    ```bash
-   mkdir -p ../build-reader
-   cd ../build-reader
-   cmake ../reader
+   mkdir -p ../build-client
+   cd ../build-client
+   cmake ../client
    make
    ```
 
-   Isso irá gerar o binário/UF2 do `reader` (por exemplo, `reader.uf2`).
+   Isso irá gerar o binário/UF2 do `client` (por exemplo, `client.uf2`).
 
 ---
 
@@ -86,28 +86,28 @@ Dentro do diretório `RP2040_BLTLE_Template/` você encontrará:
    - Conecte o cabo USB ao computador.
    - Solte o botão.
    - O Pico aparecerá como um drive USB (ex.: `RPI-RP2`).
-2. **Gravar o `writer`**:
+2. **Gravar o `server`**:
 
-   - Copie o arquivo `writer.uf2` (gerado em `build-writer/`) para o drive `RPI-RP2`.
-   - O Pico irá reiniciar automaticamente com o firmware do `writer`.
-3. **Gravar o `reader`**:
+   - Copie o arquivo `server.uf2` (gerado em `build-server/`) para o drive `RPI-RP2`.
+   - O Pico irá reiniciar automaticamente com o firmware do `server`.
+3. **Gravar o `client`**:
 
    - Repita o processo usando a segunda placa Pico W.
-   - Copie o arquivo `reader.uf2` (gerado em `build-reader/`) para o `RPI-RP2` da segunda placa.
+   - Copie o arquivo `client.uf2` (gerado em `build-client/`) para o `RPI-RP2` da segunda placa.
 
 ---
 
-## Tutorial de uso: par writer/reader
+## Tutorial de uso: par client/server
 
 ### 1. Conexões de hardware
 
-- **Placa `writer`**:
+- **Placa `server`**:
 
   - Conecte um **potenciômetro** ao **GPIO 26** (canal ADC 0).
     - Pino 1 do potenciômetro → 3V3.
     - Pino 2 (cursor) → GPIO 26.
     - Pino 3 → GND.
-- **Placa `reader`**:
+- **Placa `client`**:
 
   - Conecte sua carga ao **GPIO 21** (saída PWM):
     - Por exemplo, um **driver de motor** ou um **LED + resistor**.
@@ -115,11 +115,11 @@ Dentro do diretório `RP2040_BLTLE_Template/` você encontrará:
 
 ### 2. Funcionamento em alto nível
 
-1. O `writer` inicializa o ADC no GPIO 26 e o stack BLE.
-2. Periodicamente, o `writer` lê o valor do ADC e atualiza a característica BLE.
-3. O `reader` se conecta ao serviço BLE exposto pelo `writer`.
-4. Sempre que um novo valor é recebido, o `reader` ajusta o nível de PWM no GPIO 21.
-5. O resultado é que o atuador conectado ao `reader` responde diretamente ao valor lido no `writer`.
+1. O `server` inicializa o ADC no GPIO 26 e o stack BLE.
+2. Periodicamente, o `server` lê o valor do ADC e atualiza a característica BLE.
+3. O `client` se conecta ao serviço BLE exposto pelo `server`.
+4. Sempre que um novo valor é recebido, o `client` ajusta o nível de PWM no GPIO 21.
+5. O resultado é que o atuador conectado ao `client` responde diretamente ao valor lido no `server`.
 
 ### 3. Monitorando via USB Serial
 
@@ -135,8 +135,8 @@ Ambos os projetos habilitam **stdio via USB**, então você pode:
 
 O projeto utiliza o **Bluetooth stack do Pico W (BTStack)** com:
 
-- Um **servidor BLE** rodando no `writer`, expondo uma característica de valor analógico (originalmente temperatura, adaptada para leitura de tensão/ADC).
-- Um **cliente BLE** no `reader`, que se conecta ao serviço do `writer` e lê as atualizações de valor.
+- Um **servidor BLE** rodando no `server`, expondo uma característica de valor analógico (originalmente temperatura, adaptada para leitura de tensão/ADC).
+- Um **cliente BLE** no `client`, que se conecta ao serviço do `server` e lê as atualizações de valor.
 
 Os detalhes de serviços, características e callbacks estão encapsulados nos arquivos `bt_setup.cpp` e `bt_setup.h` de cada projeto.
 
@@ -168,7 +168,7 @@ Um arquivo separado de licença também é fornecido neste repositório.
 
 - Baseado em exemplo do **Raspberry Pi Pico SDK**.
 - Adaptações e organização do template por **Carlos Delfino**.
-- Código original do demo Bluetooth (`writer`/`reader`) por **Travis Llado**.
+- Código original do demo Bluetooth (`server`/`client`) por **Travis Llado**.
 
 ---
 
