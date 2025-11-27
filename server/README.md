@@ -1,6 +1,6 @@
-# Pico W – Writer (Sensor BLE)
+# Pico W – Server (Sensor BLE)
 
-[![Visitors](https://komarev.com/ghpvc/?username=ArvoreDosSaberes&repo=RP2040_BLTLE_Template-writer&color=blue&style=flat)](https://github.com/ArvoreDosSaberes/RP2040_BLTLE_Template/tree/main/writer)
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=ArvoreDosSaberes.RP2040_BLTLE_Template)
 [![Issues](https://img.shields.io/github/issues/ArvoreDosSaberes/RP2040_BLTLE_Template)](https://github.com/ArvoreDosSaberes/RP2040_BLTLE_Template/issues)
 [![Stars](https://img.shields.io/github/stars/ArvoreDosSaberes/RP2040_BLTLE_Template)](https://github.com/ArvoreDosSaberes/RP2040_BLTLE_Template/stargazers)
 [![Forks](https://img.shields.io/github/forks/ArvoreDosSaberes/RP2040_BLTLE_Template)](https://github.com/ArvoreDosSaberes/RP2040_BLTLE_Template/network/members)
@@ -40,11 +40,11 @@ Isso irá gerar o binário/UF2 do `writer` (por exemplo, `writer.uf2`).
 ## Como gravar no Pico W
 
 1. Coloque o Pico W em modo **BOOTSEL**:
+
    - Segure o botão **BOOTSEL**.
    - Conecte o cabo USB ao computador.
    - Solte o botão.
    - O Pico aparecerá como um drive USB (ex.: `RPI-RP2`).
-
 2. Copie o arquivo `writer.uf2` (da pasta `build-writer/`) para o drive `RPI-RP2`.
 3. O Pico irá reiniciar automaticamente com o firmware `writer`.
 
